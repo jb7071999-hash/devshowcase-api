@@ -1,0 +1,171 @@
+{
+  "info": {
+    "name": "DevShowcase API",
+    "description": "Endpoints das Atividades 1 e 2 - UAPITSI16 Programação Backend (UESPI)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "profileId", "value": "1" },
+    { "key": "projectId", "value": "1" },
+    { "key": "technologyId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Profiles",
+      "item": [
+        {
+          "name": "Criar profile",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Wallyson Silva\",\n  \"bio\": \"Professor e desenvolvedor\",\n  \"githubUrl\": \"https://github.com/wallyson\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/profiles", "host": ["{{baseUrl}}"], "path": ["api", "profiles"] }
+          }
+        },
+        {
+          "name": "Listar profiles",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/profiles", "host": ["{{baseUrl}}"], "path": ["api", "profiles"] }
+          }
+        },
+        {
+          "name": "Buscar profile por id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/profiles/{{profileId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "profiles", "{{profileId}}"]
+            }
+          }
+        },
+        {
+          "name": "Erro - profile sem name (400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/api/profiles", "host": ["{{baseUrl}}"], "path": ["api", "profiles"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Technologies",
+      "item": [
+        {
+          "name": "Criar technology",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Node.js\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/technologies", "host": ["{{baseUrl}}"], "path": ["api", "technologies"] }
+          }
+        },
+        {
+          "name": "Listar technologies",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/technologies", "host": ["{{baseUrl}}"], "path": ["api", "technologies"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Criar project",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"DevShowcase API\",\n  \"description\": \"Backend do projeto\",\n  \"repoUrl\": \"https://github.com/wallyson/devshowcase-api\",\n  \"profileId\": {{profileId}},\n  \"technologyIds\": [{{technologyId}}]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/projects", "host": ["{{baseUrl}}"], "path": ["api", "projects"] }
+          }
+        },
+        {
+          "name": "Listar projects (busca + filtro + paginação)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/projects?search=DevShowcase&technology=Node.js&page=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects"],
+              "query": [
+                { "key": "search", "value": "DevShowcase" },
+                { "key": "technology", "value": "Node.js" },
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar project por id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/{{projectId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "{{projectId}}"]
+            }
+          }
+        },
+        {
+          "name": "Incrementar curtidas (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"incrementStars\": 1\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/{{projectId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "{{projectId}}"]
+            }
+          }
+        },
+        {
+          "name": "Enviar feedback (recalcula média)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"rating\": 5,\n  \"comment\": \"Excelente projeto!\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/{{projectId}}/feedbacks",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "{{projectId}}", "feedbacks"]
+            }
+          }
+        },
+        {
+          "name": "Erro - rating inválido (400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"rating\": 10\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/{{projectId}}/feedbacks",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "{{projectId}}", "feedbacks"]
+            }
+          }
+        },
+        {
+          "name": "Erro - project inexistente (404)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/projects/9999", "host": ["{{baseUrl}}"], "path": ["api", "projects", "9999"] }
+          }
+        }
+      ]
+    }
+  ]
+}
