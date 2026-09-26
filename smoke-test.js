@@ -32,9 +32,9 @@ async function run() {
 
   // 1. Criar profile
   let res = await request(app).post('/api/profiles').send({
-    name: 'Wallyson Silva',
-    bio: 'Dev e professor',
-    githubUrl: 'https://github.com/wallyson',
+    name: 'Francisco de Assis Brito Rocha Junior',
+    bio: 'Dev e Aluno',
+    githubUrl: 'https://github.com/jb7071999-hash',
   });
   check('POST /api/profiles -> 201', res.status === 201);
   const profileId = res.body.id;
@@ -55,7 +55,7 @@ async function run() {
   res = await request(app).post('/api/projects').send({
     title: 'DevShowcase API',
     description: 'Projeto da disciplina',
-    repoUrl: 'https://github.com/wallyson/devshowcase-api',
+    repoUrl: 'https://github.com/jb7071999-hash/devshowcase-api',
     profileId,
     technologyIds: [techId],
   });
